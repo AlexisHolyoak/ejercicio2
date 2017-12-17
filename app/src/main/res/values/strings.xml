@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Ejercicio 2</string>
+    <string name="title">Registro de personas</string>
+    <string name="nombre">Nombre</string>
+    <string name="appellido">Apellidos</string>
+    <string name="edad">Edad</string>
+    <string name="add">Añadir</string>
+    <string name="delete">Eliminar</string>
+    <string name="clean">Limpiar</string>
+</resources>
