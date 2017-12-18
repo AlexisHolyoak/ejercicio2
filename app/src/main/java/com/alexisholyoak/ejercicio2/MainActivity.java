@@ -1,6 +1,8 @@
 package com.alexisholyoak.ejercicio2;
 
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements RemoveClickListne
     RecyclerAdapter adapter;
     String nombre="",apellidos="",edad="";
     ArrayList<Persona> myList;
+    Persona per;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -44,6 +47,13 @@ public class MainActivity extends AppCompatActivity implements RemoveClickListne
         txtnombre=(TextView)findViewById(R.id.txtnombre);
         txtapellido=(TextView)findViewById(R.id.txtapellido);
         txtedad=(TextView)findViewById(R.id.txtedad);
+        adapter.setOnEntryClickListener(new RecyclerAdapter.OnEntryClickListener() {
+            @Override
+            public void onEntryClick(View view, int position) {
+
+                infoDialog(myList.get(position));
+            }
+        });
         btnadd=(Button)findViewById(R.id.btnadd);
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,5 +90,18 @@ public class MainActivity extends AppCompatActivity implements RemoveClickListne
     public void OnRemoveClick(int index) {
         myList.remove(index);
         adapter.notifyData(myList);
+    }
+    public void infoDialog(Persona per){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Datos de la persona");
+        builder.setMessage("Nombres: "+per.getNombre() +"\n" + "Apellidos: "+per.getApellido()+"\n"+ "Edad: "+ per.getEdad());
+        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

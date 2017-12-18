@@ -46,11 +46,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         this.myList = myList;
         notifyDataSetChanged();
     }
-    public class RecyclerItemViewHolder extends RecyclerView.ViewHolder{
+    public class RecyclerItemViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         private final TextView nombre;
         private final Button eliminar;
         public RecyclerItemViewHolder(final View parent){
             super(parent);
+            parent.setOnClickListener(this);
             nombre=(TextView)parent.findViewById(R.id.pnombre);
             eliminar=(Button)parent.findViewById(R.id.deletebtn);
             eliminar.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +61,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                 }
             });
         }
-    }
 
+        @Override
+        public void onClick(View v) {
+            if (mOnEntryClickListener != null) {
+                mOnEntryClickListener.onEntryClick(v, getLayoutPosition());
+            }
+        }
+    }
+    private RecyclerAdapter.OnEntryClickListener mOnEntryClickListener;
+    public interface OnEntryClickListener {
+        void onEntryClick(View view, int position);
+    }
+    public void setOnEntryClickListener(RecyclerAdapter.OnEntryClickListener onEntryClickListener) {
+        mOnEntryClickListener = onEntryClickListener;
+    }
 }
